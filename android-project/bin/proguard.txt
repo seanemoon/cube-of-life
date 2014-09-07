@@ -1,3 +1,0 @@
-# view AndroidManifest.xml #generated:25
--keep class com.chaoshade.cube_spinner.CubeSpinner { <init>(...); }
-

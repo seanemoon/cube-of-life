@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++11    CMakeFiles/tester.dir/src/main.cc.o  -o out/tester  -L/home/sean/development/projects/cube_spinner/lib -rdynamic -lSDL2 -ldl -lGL -lpthread -Wl,-rpath,/home/sean/development/projects/cube_spinner/lib 
