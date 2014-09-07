@@ -1,0 +1,7 @@
+builld/
+out/
+lib/
+android-project/libs
+android-project/gen
+android-project/obj
+android-project/bin
