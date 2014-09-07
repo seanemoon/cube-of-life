@@ -1,0 +1,4 @@
+This software makes use of Simple DirectMedia Layer (SDL).
+
+The source code for this library is located in deps/SDL and is provided
+under the Zlib license. The source code can be found at <https://www.libsdl.org/>

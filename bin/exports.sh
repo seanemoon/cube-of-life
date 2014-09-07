@@ -1,0 +1,10 @@
+export SUPPORTED_PLATFORMS="android linux"
+export EXECUTABLE="tester"
+export MAIN_DIR=`pwd`
+export BUILD_DIR=$MAIN_DIR/build
+export DEPS_DIR=$MAIN_DIR/deps
+export INCLUDE_DIR=$MAIN_DIR/include
+export LIB_DIR=$MAIN_DIR/lib
+export OUT_DIR=$MAIN_DIR/out
+export SRC_DIR=$MAIN_DIR/src
+export ANDROID_DIR=$MAIN_DIR/android-project

@@ -1,0 +1,3 @@
+/home/sean/development/projects/cube_spinner/build/linux/SDL/CMakeFiles/SDL2.dir
+/home/sean/development/projects/cube_spinner/build/linux/SDL/CMakeFiles/SDL2-static.dir
+/home/sean/development/projects/cube_spinner/build/linux/SDL/CMakeFiles/SDL2main.dir
