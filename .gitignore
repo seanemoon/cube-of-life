@@ -1,6 +1,6 @@
-builld/
-out/
-lib/
+build/*
+out/*
+lib/*
 android-project/libs
 android-project/gen
 android-project/obj
