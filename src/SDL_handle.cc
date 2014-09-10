@@ -34,6 +34,7 @@ SDLHandle::SDLHandle()
 
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   SDL_GL_SetSwapInterval(1);
+  glEnable(GL_DEPTH_TEST);
 
   auto version = glGetString(GL_VERSION);
   std::cout << "OpenGL version: " << version << std::endl;

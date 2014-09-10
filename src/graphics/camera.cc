@@ -8,7 +8,7 @@
 namespace chaos {
     
 Camera::Camera()
-  : location_(0,0,-3),
+  : location_(0,0,-20),
     direction_(0,0,1),
     focus_(0,0,0),
     focused_(true),
@@ -24,6 +24,7 @@ void Camera::Rotate(glm::vec3 radians)
   focused_ = false;
   glm::mat4 rot(1.0f);
   rot = glm::rotate(rot, radians[0], glm::vec3(0,1,0));
+  rot = glm::rotate(rot, radians[1], glm::vec3(1,0,0));
   glm::vec4 rotated = rot * glm::vec4(direction_, 0.0f);
   direction_ = glm::vec3(rotated);
 }

@@ -10,6 +10,9 @@ namespace chaos {
 
 Triangle::Triangle(GLuint program)
   : program_{program},
+    model_{glm::mat4(1.0f)},
+    rotation_{glm::mat4(1.0f)},
+    translation_{glm::mat4(1.0f)},
     vertices_{
       -1.0f, -1.0f, 0.0f,
        1.0f, -1.0f, 0.0f,
@@ -38,16 +41,28 @@ Triangle *Triangle::Create()
   return new Triangle(program);
 }
 
-glm::mat4 Triangle::Model() const
+void Triangle::Rotate(glm::mat4 const &rotation)
 {
-  return glm::mat4(1.0f);
+  rotation_ = rotation * rotation_;
+  model_ = translation_ * rotation_;
+}
+
+void Triangle::Translate(glm::mat4 const &translation)
+{
+  translation_ = translation * translation_;
+  model_ = translation_ * rotation_;
+}
+
+glm::mat4 const &Triangle::Model() const
+{
+  return model_;
 }
 
 void Triangle::Draw(Camera const &camera) const
 {
   glUseProgram(program_);
   GLuint matrix_id = glGetUniformLocation(program_, "MVP");
-  glm::mat4 mvp = camera.Matrix() * Model();  
+  glm::mat4 mvp = camera.Matrix() * model_;
   glUniformMatrix4fv(matrix_id, 1, GL_FALSE, &mvp[0][0]);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices_);
   glEnableVertexAttribArray(0);

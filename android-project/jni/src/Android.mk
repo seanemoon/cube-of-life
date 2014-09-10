@@ -17,7 +17,10 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
   $(SOURCE_PATH)/event_handler.cc \
 	${SOURCE_PATH}/graphics/camera.cc \
 	${SOURCE_PATH}/graphics/perspective.cc \
-	${SOURCE_PATH}/graphics/objects/triangle.cc 
+	${SOURCE_PATH}/graphics/graphics_handler.cc \
+	${SOURCE_PATH}/graphics/graphics_util.cc \
+	${SOURCE_PATH}/graphics/objects/triangle.cc \
+	${SOURCE_PATH}/graphics/objects/cube.cc  \
 
 LOCAL_SHARED_LIBRARIES := SDL2
 

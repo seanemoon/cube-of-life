@@ -15,6 +15,8 @@ class GraphicsHandler {
  public:
   GraphicsHandler();
   GraphicsHandler(Camera camera);
+  void Begin(bool negative, glm::vec3 axis);
+  void Stop();
   void Draw();
   void Update();
   void AddObject(std::unique_ptr<Drawable> object);

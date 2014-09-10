@@ -7,7 +7,7 @@ namespace chaos {
 
 Perspective::Perspective()
   : field_of_view_(45.0f),
-    perspective_(4.0f / 3.0f),
+    perspective_(1366.0f / 768.0f),
     near_(0.1f),
     far_(100.0f) {}
 

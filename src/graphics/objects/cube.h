@@ -1,5 +1,5 @@
-#ifndef CHAOS_GRAPHICS_OBJECTS_TRIANGLE_H
-#define CHAOS_GRAPHICS_OBJECTS_TRIANGLE_H
+#ifndef CHAOS_GRAPHICS_OBJECTS_CUBE_H
+#define CHAOS_GRAPHICS_OBJECTS_CUBE_H
 
 #include "GLES2/gl2.h"
 
@@ -11,24 +11,24 @@
 
 namespace chaos {
 
-class Triangle : public Drawable {
+class Cube : public Drawable {
  public:
-  static Triangle *Create();
+  static Cube *Create();
 
   virtual void Rotate(glm::mat4 const &rotation);
   virtual void Translate(glm::mat4 const &translation);
   virtual glm::mat4 const &Model() const;
   virtual void Draw(Camera const &camera) const override;
  private:
-  Triangle(GLuint program);
+  Cube(GLuint program);
 
   GLuint program_;
   glm::mat4 model_;
   glm::mat4 rotation_;
   glm::mat4 translation_;
-  GLfloat vertices_[9];
+  GLfloat vertices_[36 * 3];
 };
 
 }  // namespace chaos
 
-#endif  // CHAOS_GRAPHICS_OBJECTS_TRIANGLE_H
+#endif  // CHAOS_GRAPHICS_OBJECTS_CUBE_H

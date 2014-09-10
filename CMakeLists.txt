@@ -47,6 +47,7 @@ set (sources
   src/graphics/perspective.cc
   src/graphics/graphics_handler.cc
   src/graphics/objects/triangle.cc
+  src/graphics/objects/cube.cc
 )
 
 
