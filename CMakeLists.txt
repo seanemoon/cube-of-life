@@ -29,10 +29,26 @@ endif ()
 project(SDLTEST)
 
 link_directories(${CMAKE_SOURCE_DIR}/lib)
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(
+  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/src
+)
 
 set (CMAKE_CXX_FLAGS -std=c++11)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 
-add_executable(${EXECUTABLE} src/main.cc)
+set (sources
+  src/main.cc
+  src/SDL_handle.cc
+  src/graphics.cc
+  src/event_handler.cc
+  src/graphics/graphics_util.cc
+  src/graphics/camera.cc
+  src/graphics/perspective.cc
+  src/graphics/graphics_handler.cc
+  src/graphics/objects/triangle.cc
+)
+
+
+add_executable(${EXECUTABLE} ${sources})
 target_link_libraries(tester SDL2 dl GL pthread)

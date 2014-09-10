@@ -21,6 +21,7 @@ if [[ $TARGET_PLATFORM = android ]]; then
     mkdir -p $OUT_DIR/$TARGET_PLATFORM/
     # CubeSpinner is set by android-project/build.xml
     cp bin/CubeSpinner-debug.apk $OUT_DIR/$TARGET_PLATFORM/
+    adb install -r $OUT_DIR/$TARGET_PLATFORM/CubeSpinner-debug.apk
   popd
 elif [[ $TARGET_PLATFORM = linux ]]; then
   if [[ $VERBOSE ]]; then
