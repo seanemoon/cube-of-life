@@ -9,23 +9,23 @@ namespace chaos {
 Perspective::Perspective()
   : field_of_view_(45.0f),
     aspect_ratio_(1366.0f / 768.0f),
-    near_z(0.1f),
-    far_z(100.0f) {}
+    z_near_(0.1f),
+    z_far_(100.0f) {}
 
 Perspective::Perspective(
     float field_of_view,
     float aspect_ratio,
-    float near_z,
-    float far_Z)
+    float z_near,
+    float z_far)
   : field_of_view_(field_of_view),
     aspect_ratio_(aspect_ratio),
-    near_z(near_z),
-    far_z(far_z) {}
+    z_near_(z_near),
+    z_far_(z_far) {}
 
-Math::Matrix4f Perspective::Matrix() const
+math::Matrix4f Perspective::Matrix() const
 {
-  return math::Perspective<float>(field_of_view_, aspect_ratio, near_z_,
-      far_z_);
+  return math::Perspective<float>(field_of_view_, aspect_ratio_, z_near_,
+      z_far_);
 }
 
 }  // namespace chaos

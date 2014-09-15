@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
       for (int z = -1; z < 2; z++) {
         if (x == 0 && y == 0 && z == 0) continue;
         Cube *cube = Cube::Create();
-        // cube->Translate(glm::translate(glm::mat4(1.0), glm::vec3(x*distance, y*distance, z*distance)));
         cube->Translate(Eigen::Affine3f(Eigen::Translation3f(x*distance,y*distance,z*distance)).matrix());
         graphics_handler->AddObject(std::unique_ptr<Cube>(cube));
 

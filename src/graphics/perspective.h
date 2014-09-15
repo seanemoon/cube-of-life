@@ -15,13 +15,14 @@ namespace chaos {
 class Perspective {
  public:
   Perspective();
-  Perspective(float field_of_view, float aspect_ratio, float near, float far);
+  Perspective(float field_of_view, float aspect_ratio, float z_near,
+      float z_far);
 
   // Constructs and returns a perspective matrix determined by the current
   // settings.
   // TODO: We should store a matrix either statically or as a class variable
   // to avoid recalculating it every frame (it shouldn't change).
-  Math::Matrix4f Matrix() const;
+  math::Matrix4f Matrix() const;
 
  private:
   // The angle that the camera opens out.
@@ -31,10 +32,10 @@ class Perspective {
   float aspect_ratio_;
 
   // How close something needs to be to the camera before it's clipped.
-  float near_;
+  float z_near_;
 
   // How far something needs to be away from the camera before it's clipped.
-  float far_;
+  float z_far_;
 };
 
 }  // namespace chaos
