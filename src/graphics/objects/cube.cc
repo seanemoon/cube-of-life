@@ -1,15 +1,10 @@
 #include "graphics/objects/cube.h"
 
-#define GLM_FORCE_RADIANS
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "GLES2/gl2.h"
-#include "GLES2/gl2ext.h"
-
 #include "graphics/camera.h"
-#include "graphics/graphics_util.h"
+#include "util/graphics.h"
+#include "util/math.h"
 
-static const GLfloat g_color_buffer_data[] = {
+static GLfloat g_color_buffer_data[] = {
     0.583f,  0.771f,  0.014f,
     0.609f,  0.115f,  0.436f,
     0.327f,  0.483f,  0.844f,
@@ -52,9 +47,6 @@ namespace chaos {
 
 Cube::Cube(GLuint program)
   : program_{program},
-    model_{glm::mat4(1.0f)},
-    rotation_{glm::mat4(1.0f)},
-    translation_{glm::mat4(1.0f)},
     vertices_{
       -1.0f,-1.0f,-1.0f, // triangle 1 : begin
       -1.0f,-1.0f, 1.0f,
@@ -97,7 +89,7 @@ Cube::Cube(GLuint program)
 Cube *Cube::Create()
 {
   GLchar v_shader_str[] =
-  "#version 130                     \n"
+  "#version 130                      \n"
   "attribute vec4 vPosition;         \n"
   "in vec3 vColor;                   \n"
   "out vec3 fragColor;               \n"
@@ -109,47 +101,36 @@ Cube *Cube::Create()
   "}                                 \n";
 
   GLchar f_shader_str[] =
-  "#version 130                     \n"
-  "in vec3 fragColor;                     \n"
+  "#version 130                               \n"
+  "in vec3 fragColor;                         \n"
   "out vec3 color;                            \n"
   "void main()                                \n"
   "{                                          \n"
   "   color = fragColor;                      \n"
   "}                                          \n";
 
-  //"  //gl_FragColor = vec4(0.0, 7.0, 3.0, 1.0); \n"
-
   GLuint program = GraphicsUtil::LoadShaders(v_shader_str, f_shader_str);
   if (!program) return nullptr;
+
+  /*
+  for (int i =0; i < 12*3; i+=1) {
+    g_color_buffer_data[i*3 + 0] = 0 * 18  / (3*12.0f);
+    g_color_buffer_data[i*3 + 1] = 18 / (3*12.0f);
+    g_color_buffer_data[i*3 + 2] = 18 / (3*12.0f);
+  }
+  */
 
   return new Cube(program);
 }
 
-void Cube::Rotate(glm::mat4 const &rotation)
-{
-  rotation_ = rotation * rotation_;
-  model_ = translation_ * rotation_;
-}
-
-void Cube::Translate(glm::mat4 const &translation)
-{
-  translation_ = translation * translation_;
-  model_ = translation_ * rotation_;
-}
-
-glm::mat4 const &Cube::Model() const
-{
-  return model_;
-}
-
-void Cube::Draw(Camera const &camera) const
+void Cube::Draw(Camera &camera)
 {
   glUseProgram(program_);
 
 
   GLuint matrix_id = glGetUniformLocation(program_, "MVP");
-  glm::mat4 mvp = camera.Matrix() * Model();
-  glUniformMatrix4fv(matrix_id, 1, GL_FALSE, &mvp[0][0]);
+  math::Matrix4f mvp = camera.Matrix() * Model();
+  glUniformMatrix4fv(matrix_id, 1, GL_FALSE, mvp.data());
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices_);
   glEnableVertexAttribArray(0);
 

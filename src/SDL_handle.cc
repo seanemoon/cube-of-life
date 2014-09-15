@@ -3,9 +3,8 @@
 #include <memory>
 #include <iostream>
 
-#include "GLES2/gl2.h"
-#include "GLES2/gl2ext.h"
-#include "SDL/SDL.h"
+#include "util/graphics.h"
+#include "util/window.h"
 
 namespace chaos {
 

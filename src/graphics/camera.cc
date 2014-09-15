@@ -1,41 +1,58 @@
 #include "graphics/camera.h"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
 #include "graphics/perspective.h"
+#include "settings.h"
+#include "util/math.h"
 
 namespace chaos {
-    
+
 Camera::Camera()
-  : location_(0,0,-20),
-    direction_(0,0,1),
-    focus_(0,0,0),
-    focused_(true),
-    perspective_() {}
-
-void Camera::Translate(glm::vec3 direction)
+  : location_{0, 0, 0},
+    orientation_{math::Quaternion::Identity()},
+    perspective_{}
 {
-  location_ += direction;
 }
 
-void Camera::Rotate(glm::vec3 radians)
+void Camera::Move(math::Vector3f direction, time_t delta_t)
 {
-  focused_ = false;
-  glm::mat4 rot(1.0f);
-  rot = glm::rotate(rot, radians[0], glm::vec3(0,1,0));
-  rot = glm::rotate(rot, radians[1], glm::vec3(1,0,0));
-  glm::vec4 rotated = rot * glm::vec4(direction_, 0.0f);
-  direction_ = glm::vec3(rotated);
+  location_ += settings::kSpeed * delta_t * direction;
 }
 
-glm::mat4 Camera::Matrix() const
+math::Vector3f Camera::Forward()
 {
-  glm::vec3 center = (focused_) ? focus_ : location_ + direction_;
-  glm::mat4 view = glm::lookAt(
+  math::Vector3f direction = orientation_ * math::Vector3f(0, 0, 1);
+  return math::Vector3f(direction.x(), 0, direction.z()).normalized();
+}
+
+math::Vector3f Camera::Right()
+{
+  math::Vector3f direction = orientation_ * math::Vector3f(-1, 0, 0);
+  return math::Vector3f(direction.x(), 0, direction.z()).normalized();
+}
+
+void Camera::UpdateOrientation(int delta_x, int delta_y)
+{
+  static float pitch = 0;
+  static float yaw = 0;
+  if (delta_x == 0 && delta_y == 0) return;
+
+  pitch += delta_y * settings::kSensitivity;
+  yaw   -= delta_x * settings::kSensitivity;
+  if (pitch > math::PI / 2.0f) pitch = math::PI / 2.0f;
+  if (pitch < -math::PI / 2.0f) pitch = -math::PI / 2.0f;
+
+  auto yaw_quat = math::CreateQuaternion(yaw, {0,1,0});
+  auto pitch_quat = math::CreateQuaternion(pitch, {1,0,0});
+  orientation_ = (yaw_quat * pitch_quat).normalized();
+}
+
+math::Matrix4f Camera::Matrix()
+{
+  auto view = math::LookAt(
       location_,
-      center,
-      glm::vec3(0, 1, 0));
+      (location_ + orientation_ * math::Vector3f(0,0,1)).eval(),
+      orientation_ * math::Vector3f(0,1,0)
+  );
   return perspective_.Matrix() * view;
 }
 
